@@ -1,0 +1,59 @@
+{% extends 'inventory/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row-mt-6">
+        <div class="col-md-10">
+                    <table class="table table-striped  table-bordered table-hovet">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Available QTY</th>
+                                <th scope="col">Supplier</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Created By</th>
+                                <th scope="col">Created Date</th>
+                                <th scope="col">Previous QTY</th>
+						        <th scope="col">Update Product</th>
+			                    <th scope="col">Delete Product </th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                    {% for item in items %}
+                        <tr style='cursor: pointer; cursor: hand;'>
+                            <th scope="row">{{ item.id }}</th>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.amount }}</td>
+                            <td>{{ item.supplier }}</td>
+                            <td>{{ item.category }}</td>
+                            <td>{{ item.price }}</td>
+                            <td>{{ item.created_by }}</td>
+                            <td>{{ item.created_date }}</td>
+                            <td>{{ item.initial_amount }}</td>
+                            <td><a class="btn btn-sm btn-info" href="{% url 'update-item' item.pk %}">Update</a></td>
+			                <td><a class="btn btn-sm btn-danger" href="{% url 'delete-item' item.pk %}">Delete</a></td>
+						
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                {% if user.is_staff and user.is_superuser %}
+                <div class="col-md-1">
+                    <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy}}
+                    <br>
+                    <a class="btn btn-primary" href="{% url 'add-item' %}" role="button">Add Product</a>
+                    </form>
+                </div>
+                {% else %}
+                <div class="col-md-1">
+               {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

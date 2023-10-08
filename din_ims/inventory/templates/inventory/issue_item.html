@@ -1,0 +1,41 @@
+{% extends 'inventory/base.html' %}
+{% load widget_tweaks %} 
+
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class=" col-md-10">
+        <div class=" card mx-auto" style="width: 30rem; ">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Issue  Item</h5>
+                    
+                <form method="POST" >
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="item" class="form-label">Item Name</label>
+                        {% render_field form.item class="form-control" type="item" %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="typeNumber" class="form-label">Issued_amount</label>
+                        {% render_field form.issued_amount class="form-control" type="number" %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="typeNumber" class="form-label">Selling Price</label>
+                        {% render_field form.selling_price class="form-control" type="number" %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="issued_to" class="form-label">Issued_to</label>
+                        {% render_field form.issued_to class="form-control" type="issued_to" %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="return_date" class="form-label">return_date</label>
+                        {% render_field form.return_date class="form-control" type="date" %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock  %}

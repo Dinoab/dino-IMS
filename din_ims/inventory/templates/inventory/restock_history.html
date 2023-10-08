@@ -1,0 +1,53 @@
+
+{% extends 'inventory/base.html' %}
+{% block title %}{{ header }} {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-10">
+                    <table class="table table-striped  table-bordered table-hovet">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Stocked QTY</th>
+                                <th scope="col">supplier</th>
+                                <th scope="col">category</th>
+                                <th scope="col">price</th>
+                                <th scope="col">Current Stock</th>
+                                <th scope="col">Stock Date</th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                    {% for item in items %}
+                        <tr style='cursor: pointer; cursor: hand;'>
+                            <th scope="row">{{ item.id }}</th>
+                            <td>{{ item.item }}</td>
+                            <td>{{ item.amount }}</td>
+                            <td>{{ item.supplier }}</td>
+                            <td>{{ item.category}}</td> 
+                            <td>{{ item.price}}</td>
+                            <td>{{ item.initial_value }}</td>
+                            <td>{{ item.timestamp }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                {% if user.is_staff and user.is_superuser %}
+                <div class="col-md-1">
+                    <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy}}
+                    <br>
+                    <a class="btn btn-primary" href="{% url 'restock-item' %}" role="button">Restock Product</a>
+                    </form>
+                </div>
+                {% else %}
+                <div class="col-md-1">
+               {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
